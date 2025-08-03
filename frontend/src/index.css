@@ -16,8 +16,8 @@ body::-webkit-scrollbar {
   width: 0;
   height: 0;
 }
-h1{
-  font-size:large;
+h1 {
+  font-size: large;
   font-weight: bold;
 }
 button {
@@ -32,7 +32,9 @@ button:hover {
 button:disabled:hover {
   transform: none;
 }
-section,article,div{
+section,
+article,
+div {
   transition: all 0.5s ease;
 }
 .icon {
@@ -51,9 +53,9 @@ section,article,div{
   grid-template-columns: minmax(20%, 40%) 50% minmax(20%, 40%);
   border-bottom: 5px solid black;
 }
-.plantTable{
+.plantTable {
   display: grid;
-  grid-template-columns: minmax(20%,40%) minmax(60%,80%);
+  grid-template-columns: minmax(20%, 40%) minmax(60%, 80%);
 }
 .first {
   background-image: linear-gradient(to right, white 50%, transparent 50%);
@@ -146,5 +148,22 @@ section,article,div{
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+@keyframes book {
+  0% {
+    transform: rotateY(0deg);
+  }
+  25% {
+    transform: rotateY(-90deg);
+  }
+  50% {
+    transform: rotateY(-180deg);
+  }
+  75% {
+    transform: rotateY(-90deg);
+  }
+  100% {
+    transform: rotateY(0deg);
   }
 }

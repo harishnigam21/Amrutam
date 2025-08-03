@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { GrAttachment } from "react-icons/gr";
 import { RxCross2 } from "react-icons/rx";
 import { IoMdAdd } from "react-icons/io";
+import { FaCheck } from "react-icons/fa";
 export function AddIncredient() {
   const hasInit = useRef(false);
   const [ing, setIng] = useState({
@@ -32,10 +33,10 @@ export function AddIncredient() {
     therapyUses: [],
     plant: { detail: [], combinedWith: "", location: "" },
   });
-  const [more, setMore] = useState(false);
+  const [more, setMore] = useState(true); //TODO default false
   const [clear, setClear] = useState(true);
   const [save, setSave] = useState(true);
-  const [add, setAdd] = useState(false);
+  const [add, setAdd] = useState(true); //TODO default false :TODO
   const errorRef1 = useRef(null);
   const errorRef2 = useRef(null);
   const errorRef3 = useRef(null);
@@ -67,6 +68,31 @@ export function AddIncredient() {
     }
   }, []);
 
+  const onNext = (e) => {
+    const index = slider.indexOf(e.target.id.slice(0, -3));
+    for (let i = 0; i < slider.length; i++) {
+      if (i !== index + 1) {
+        document.querySelector(`#${slider[i]}`).style.display = "none";
+        const ele = document.querySelector(`.${slider[i]}`);
+        ele.querySelectorAll("strong")[0].style.color = "black";
+        ele.querySelectorAll("strong")[1].style.color = "black";
+        ele.querySelectorAll("strong")[0].style.border = "2px solid black";
+      } else {
+        document.querySelector(`#${slider[i]}`).style.display = "flex";
+        const ele = document.querySelector(`.${slider[i]}`);
+        ele.querySelectorAll("strong")[0].style.color = "green";
+        ele.querySelectorAll("strong")[1].style.color = "green";
+        ele.querySelectorAll("strong")[0].style.border = "2px solid green";
+      }
+    }
+    for (let i = index; i >= 0; i--) {
+      const ele = document.querySelector(`.${slider[i]}`);
+      ele.querySelectorAll("strong")[0].style.background = "green";
+      ele.querySelectorAll("strong")[0].textContent = "✓";
+      ele.querySelectorAll("strong")[0].style.color = "white";
+      ele.querySelectorAll("strong")[0].style.fontWeight = "bolder";
+    }
+  };
   const onSave = (e) => {
     e.preventDefault();
     if (
@@ -273,35 +299,36 @@ export function AddIncredient() {
       formulation: [...prop.formulation, newItem],
     }));
   };
-  // TODO don't forgot to remove "!" after creation
-  return !more ? (
+  return more ? (
     <section className="flex flex-col w-screen md:w-[75vw] gap-4">
       <article className="relative flex flex-nowrap overflow-scroll noscrollbar justify-between w-full text-xs lg:text-xl md:w-[75%] my-4 self-center text-center whitespace-nowrap gap-2">
-        <div className="first flex flex-col justify-center items-center">
-          <strong className="bg-white p-2 aspect-square rounded-full border-2 border-black">
+        <div className="general first flex flex-col justify-center items-center">
+          <strong className="bg-white p-2 aspect-square rounded-full border-2 border-[green] text-[green]">
             01
           </strong>
-          <strong className="w-[45px] sm:w-fit overflow-hidden transition-all">General Information</strong>
+          <strong className="w-[45px] text-[green] sm:w-fit overflow-hidden transition-all">
+            General Information
+          </strong>
         </div>
-        <div className="flex flex-col justify-center items-center">
+        <div className="benefits flex flex-col justify-center items-center">
           <strong className="bg-white p-2 aspect-square rounded-full border-2 border-black">
             02
           </strong>
           <strong>Benefits</strong>
         </div>
-        <div className="flex flex-col justify-center items-center">
+        <div className="properties flex flex-col justify-center items-center">
           <strong className="p-2 bg-white aspect-square rounded-full border-2 border-black">
             03
           </strong>
           <strong>Properties</strong>
         </div>
-        <div className="flex flex-col justify-center items-center">
+        <div className="other flex flex-col justify-center items-center">
           <strong className="p-2 bg-white aspect-square rounded-full border-2 border-black">
             04
           </strong>
           <strong>Other</strong>
         </div>
-        <div className="last flex flex-col justify-center items-center">
+        <div className="overview last flex flex-col justify-center items-center">
           <strong className="p-2 bg-white aspect-square rounded-full border-2 border-black">
             05
           </strong>
@@ -311,7 +338,10 @@ export function AddIncredient() {
       </article>
 
       {/* General Information */}
-      <section id="general" className="flex flex-col gap-4">
+      <section
+        id="general"
+        className="flex flex-col gap-4 animate-[book_0.5s_ease-in-out]"
+      >
         <section className="flex flex-col p-4 rounded-lg shadow-[0.1rem_0.1rem_0.5rem_black] gap-4">
           <h1>General Information</h1>
           <article className="flex flex-wrap md:flex-nowrap gap-3">
@@ -407,6 +437,7 @@ export function AddIncredient() {
             disabled={!add}
             type="button"
             className="bg-gray-600 text-white py-2 px-8 rounded-lg"
+            onClick={(e) => onNext(e)}
           >
             Next
           </button>
@@ -417,7 +448,10 @@ export function AddIncredient() {
         </strong>
       </section>
       {/* Benefits */}
-      <section id="benefits" className="flex flex-col gap-4">
+      <section
+        id="benefits"
+        className="hidden  flex-col gap-4 animate-[book_0.5s_ease-in-out]"
+      >
         <section className="flex flex-col p-4 rounded-lg shadow-[0.1rem_0.1rem_0.5rem_black] gap-6">
           <h1>Benefits</h1>
           <article className="flex flex-col gap-2">
@@ -750,6 +784,7 @@ export function AddIncredient() {
             Save
           </button>
           <button
+            onClick={(e) => onNext(e)}
             id="benefitsbtn"
             disabled={!add}
             type="button"
@@ -764,7 +799,10 @@ export function AddIncredient() {
         </strong>
       </section>
       {/* Properties */}
-      <section id="properties" className="flex flex-col gap-4">
+      <section
+        id="properties"
+        className="hidden  flex-col gap-4 animate-[book_0.5s_ease-in-out]"
+      >
         <section className="flex flex-col p-4 rounded-lg shadow-[0.1rem_0.1rem_0.5rem_black] gap-4">
           <article className="flex flex-col gap-4">
             <h1>Ayurvedic Properties</h1>
@@ -970,6 +1008,7 @@ export function AddIncredient() {
             Save
           </button>
           <button
+            onClick={(e) => onNext(e)}
             id="propertiesbtn"
             disabled={!add}
             type="button"
@@ -984,7 +1023,10 @@ export function AddIncredient() {
         </strong>
       </section>
       {/* Others */}
-      <section id="other" className="flex flex-col gap-4">
+      <section
+        id="other"
+        className="hidden  flex-col gap-4 animate-[book_0.5s_ease-in-out]"
+      >
         <section className="flex flex-col p-4 rounded-lg shadow-[0.1rem_0.1rem_0.5rem_black] gap-4">
           <h1>Plant Parts And Its Purpose</h1>
           {ing.plant.detail.map((item) => (
@@ -1168,6 +1210,7 @@ export function AddIncredient() {
             Save
           </button>
           <button
+            onClick={(e) => onNext(e)}
             id="otherbtn"
             disabled={!add}
             type="button"
@@ -1182,7 +1225,10 @@ export function AddIncredient() {
         </strong>
       </section>
       {/* Overview */}
-      <section id="overview" className="flex flex-col gap-4">
+      <section
+        id="overview"
+        className="hidden  flex-col gap-4 animate-[book_0.5s_ease-in-out]"
+      >
         Overview
       </section>
     </section>
