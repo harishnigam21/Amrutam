@@ -3,7 +3,9 @@ import { useEffect, useRef, useState } from "react";
 import { GrAttachment } from "react-icons/gr";
 import { RxCross2 } from "react-icons/rx";
 import { IoMdAdd } from "react-icons/io";
-import { FaCheck } from "react-icons/fa";
+import { FaShare } from "react-icons/fa";
+import dummyprofile from "./assets/images/dummyprofile.png";
+
 export function AddIncredient() {
   const hasInit = useRef(false);
   const [ing, setIng] = useState({
@@ -33,17 +35,22 @@ export function AddIncredient() {
     therapyUses: [],
     plant: { detail: [], combinedWith: "", location: "" },
   });
-  const [more, setMore] = useState(true); //TODO default false
+  const [more, setMore] = useState(false); //TODO default false
   const [clear, setClear] = useState(true);
   const [save, setSave] = useState(true);
-  const [add, setAdd] = useState(true); //TODO default false :TODO
+  const [add, setAdd] = useState(false); //TODO default false :TODO
   const errorRef1 = useRef(null);
   const errorRef2 = useRef(null);
   const errorRef3 = useRef(null);
   const errorRef4 = useRef(null);
   const errorRef5 = useRef(null);
+  const errorRef6 = useRef(null);
   const slider = ["general", "benefits", "properties", "other", "overview"];
   useEffect(() => {
+    const check = sessionStorage.getItem("newIng");
+    if (check) {
+      setIng(JSON.parse(sessionStorage.getItem("newIng"))); //Make condition that when submit button clicked this obj should delete from session storage and here make condition that when object is available set ing and when is not available take that default one initialized there, also when submitted return thm to home
+    }
     if (!hasInit.current) {
       if (ing.whyToUse.length === 0) {
         addUses();
@@ -67,8 +74,13 @@ export function AddIncredient() {
       }
     }
   }, []);
-
+  useEffect(() => {
+    setSave(true);
+    setAdd(false);
+  }, [ing]);
   const onNext = (e) => {
+    setAdd(false);
+    setSave(true);
     const index = slider.indexOf(e.target.id.slice(0, -3));
     for (let i = 0; i < slider.length; i++) {
       if (i !== index + 1) {
@@ -298,6 +310,57 @@ export function AddIncredient() {
       ...prop,
       formulation: [...prop.formulation, newItem],
     }));
+  };
+  const onSubmit = async () => {
+    //send data to database from session storage object
+    //clear object, so it can be used to add more ingredients
+    //navigate to the Ingredient List
+    document.querySelector("#submitbtn").textContent = "Submitting...";
+    const url = `${process.env.REACT_APP_BACKEND_HOST}/ingredients`;
+    const response = await fetch(url, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ data: ing }),
+    });
+    const received = await response.json();
+    if (response.ok) {
+      sessionStorage.clear();
+      document.querySelector("#submitbtn").textContent = "Submitted";
+      document.querySelector("#submitbtn").disabled = true;
+      errorRef6.current.style.color = "green";
+      errorRef6.current.textContent = received.message;
+      setTimeout(() => {
+        window.location.replace("/ingredients_list");
+      }, 2000);
+    } else {
+      const check = JSON.parse(sessionStorage.getItem("modify"));
+      if (response.status === 409 && check && check.status === "yes") {
+        const response = await fetch(url, {
+          method: "PUT",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ id: check.id, data: ing }),
+        });
+        const received = await response.json();
+        if (response.ok) {
+          sessionStorage.clear();
+          document.querySelector("#submitbtn").textContent = "Updating";
+          document.querySelector("#submitbtn").disabled = true;
+          errorRef6.current.style.color = "green";
+          errorRef6.current.textContent = received.message;
+          setTimeout(() => {
+            window.location.replace("/ingredients_list");
+          }, 2000);
+        } else {
+          document.querySelector("#submitbtn").textContent = "Submit";
+          errorRef6.current.style.color = "red";
+          errorRef6.current.textContent = received.message;
+        }
+      } else {
+        document.querySelector("#submitbtn").textContent = "Submit";
+        errorRef6.current.style.color = "red";
+        errorRef6.current.textContent = received.message;
+      }
+    }
   };
   return more ? (
     <section className="flex flex-col w-screen md:w-[75vw] gap-4">
@@ -1227,9 +1290,143 @@ export function AddIncredient() {
       {/* Overview */}
       <section
         id="overview"
-        className="hidden  flex-col gap-4 animate-[book_0.5s_ease-in-out]"
+        className="hidden  flex-col gap-4 p-4 animate-[book_0.5s_ease-in-out]"
       >
-        Overview
+        <article className="flex flex-col gap-2 pb-4 border-b-2">
+          <div className="flex justify-between items-center">
+            <h1>General Information</h1>
+            <FaShare />
+          </div>
+          <img
+            src={dummyprofile}
+            className="w-[200px] h-[200px] self-center"
+            alt="about ing"
+          />
+          <h1 className="font-serif text-2xl">
+            {ing.name} - {ing.scname} (Sanskrit - {ing.skname})
+          </h1>
+          <div className="flex flex-col gap-4">
+            <div className="flex justify-between items-center">
+              <h1>Description</h1>
+              <FaShare />
+            </div>
+            <p>{ing.description}</p>
+          </div>
+          <div className="flex flex-col gap-4">
+            <div className="flex justify-between items-center">
+              <h1>Why Chitrak ?</h1>
+              <FaShare />
+            </div>
+            {ing.whyToUse.map((list, index) => (
+              <li key={`why/${index}`}>{list.value}</li>
+            ))}
+          </div>
+        </article>
+        <article className="flex flex-col gap-2 pb-4 border-b-2">
+          <div className="flex flex-col gap-4">
+            <div className="flex justify-between items-center">
+              <h1>Prakriti Impact</h1>
+              <FaShare />
+            </div>
+            <li>
+              Vata - {ing.prakritiImpact.vata} - {ing.prakritiImpact.vataReason}
+            </li>
+            <li>
+              Kapha - {ing.prakritiImpact.kapha} -{" "}
+              {ing.prakritiImpact.kaphaReason}
+            </li>
+            <li>
+              Pitta - {ing.prakritiImpact.pitta} -{" "}
+              {ing.prakritiImpact.pittaReason}
+            </li>
+          </div>
+        </article>
+        <article className="flex flex-col gap-2 pb-4 border-b-2">
+          <div className="flex flex-col gap-4">
+            <div className="flex justify-between items-center">
+              <h1>Benefits</h1>
+              <FaShare />
+            </div>
+            {ing.benefits.map((list) => (
+              <li>{list.value}</li>
+            ))}
+          </div>
+        </article>
+        <article className="flex flex-col gap-2 pb-4 border-b-2">
+          <div className="flex flex-col gap-4">
+            <div className="flex justify-between items-center">
+              <h1>Ayurvedic Properties</h1>
+              <FaShare />
+            </div>
+            <li>Rasa - {ing.properties.rasa}</li>
+            <li>Veerya - {ing.properties.veerya}</li>
+            <li>Guna - {ing.properties.guna}</li>
+            <li>Vipaka - {ing.properties.vipaka}</li>
+          </div>
+        </article>
+        <article className="flex flex-col gap-2 pb-4 border-b-2">
+          <div className="flex flex-col gap-4">
+            <div className="flex justify-between items-center">
+              <h1>Important Formulations</h1>
+              <FaShare />
+            </div>
+            {ing.formulation.map((list) => (
+              <li>{list.value}</li>
+            ))}
+          </div>
+        </article>
+        <article className="flex flex-col gap-2 pb-4 border-b-2">
+          <div className="flex flex-col gap-4">
+            <div className="flex justify-between items-center">
+              <h1>Therapeutic uses</h1>
+              <FaShare />
+            </div>
+            {ing.therapyUses.map((list) => (
+              <li>{list.value}</li>
+            ))}
+          </div>
+        </article>
+        <article className="flex flex-col gap-2 pb-4 border-b-2">
+          <div className="flex flex-col gap-4">
+            <div className="flex justify-between items-center">
+              <h1>Plant parts and its purpose</h1>
+              <FaShare />
+            </div>
+            {ing.plant.detail.map((list) => (
+              <li>
+                {list.part} - {list.description}
+              </li>
+            ))}
+          </div>
+        </article>
+        <article className="flex flex-col gap-2 pb-4 border-b-2">
+          <div className="flex flex-col gap-4">
+            <div className="flex justify-between items-center">
+              <h1>Best combined with</h1>
+              <FaShare />
+            </div>
+            <p>{ing.plant.combinedWith}</p>
+          </div>
+        </article>
+        <article className="flex flex-col gap-2 pb-4 border-b-2">
+          <div className="flex flex-col gap-4">
+            <div className="flex justify-between items-center">
+              <h1>Geographical Locations</h1>
+              <FaShare />
+            </div>
+            <p>{ing.plant.location}</p>
+          </div>
+        </article>
+        <article className="flex flex-col items-center">
+          <button
+            id="submitbtn"
+            className="px-8 py-2 rounded-md bg-green-600 font-extrabold"
+            onClick={() => onSubmit()}
+          >
+            Submit
+          </button>
+          <strong ref={errorRef6}></strong>
+        </article>
       </section>
     </section>
   ) : (
@@ -1361,7 +1558,11 @@ export function AddIncredient() {
             type="button"
             disabled={!add}
             className="bg-green-600 text-white py-2 px-6 rounded-lg"
-            onClick={() => setMore(true)}
+            onClick={() => {
+              setMore(true);
+              setSave(true);
+              setAdd(false);
+            }}
           >
             Add More details
           </button>

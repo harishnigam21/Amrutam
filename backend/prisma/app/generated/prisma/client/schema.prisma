@@ -1,0 +1,17 @@
+generator client {
+  provider      = "prisma-client-js"
+  output        = "../prisma/app/generated/prisma/client"
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model ingredients {
+  id        Int    @id @unique(map: "id_UNIQUE") @default(autoincrement())
+  name      String @unique(map: "name_UNIQUE") @db.VarChar(128)
+  details   String @db.LongText
+  createdAt String @db.VarChar(45)
+}

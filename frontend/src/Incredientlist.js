@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MdAdd } from "react-icons/md";
 import { FaDownload } from "react-icons/fa";
 import { BiSortAlt2 } from "react-icons/bi";
@@ -6,6 +6,8 @@ import { FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa";
+import { FaEdit } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 
 // The external libraries for Excel generation and file saving.
 const scriptTags = [
@@ -15,20 +17,124 @@ const scriptTags = [
 export function Incredientlist() {
   const [ing, setIng] = useState([
     {
-      id: 1,
-      name: "Khus Khus",
+      name: "Citrak",
+      scname: "Plumbago zeylancia",
+      skname: "चित्रक",
       description:
-        "Khus khus, commonly known as poppy seeds, is a versatile ingredient and traditional herb celebrated for its wide-ranging benefits. Historically used as a natural remedy, these tiny seeds are well-regarded for their sedative properties, which can be particularly helpful in aiding insomnia and promoting a state of calm. They contain compounds that have a soothing effect on the nervous system, making them a popular choice for nighttime remedies. Beyond their calming effects, poppy seeds are also traditionally linked to enhancing fertility, with some cultures believing they can improve reproductive health. Nutritionally, khus khus is a powerhouse, packed with essential minerals like calcium, magnesium, and zinc, and they are a good source of healthy fats and dietary fiber. In the culinary world, they are a staple, used to add a nutty flavor and a thickening texture to various dishes, from savory curries and gravies to baked goods like cakes and bread.",
+        "Nestled in the serene foothills of the Himalayas, our Ayurveda Healing Retreat offers a perfect blend of ancient traditions and modern wellness practices. Guests will experience personalized Ayurvedic treatments, guided meditation sessions, and expert-led yoga classes.",
       status: "Active",
+      imageurl: "C:\\fakepath\\Screenshot 2025-07-31 203008.png",
+      whyToUse: [
+        {
+          id: 0,
+          value:
+            " Chitrak is valued because it it helps lower blood sugar, boosts digestion, and reduces anxiety.",
+        },
+        {
+          id: 2,
+          value: " It is most used in Ayurvedic medicines for indigestion",
+        },
+        {
+          id: 3,
+          value:
+            " It also protects the skin and speeds up wound healing with its antioxidant and antimicrobial properties.",
+        },
+      ],
+      prakritiImpact: {
+        vata: "Prana Vata",
+        vataReason: "Suppressed Urges",
+        kapha: "Kledaka Kapha",
+        kaphaReason: "Lack of physical activity",
+        pitta: "Ranjaka Pitta",
+        pittaReason: "Red meat",
+      },
+      benefits: [
+        {
+          id: 0,
+          value:
+            " Calms The Nervous System And Reduces Anxiety. Reduces Cholesterol And Supports Weight Loss.",
+        },
+        {
+          id: 1,
+          value:
+            " Manages Diabetes By Lowering Blood Sugar Levels. Beneficial in Hemorrhoids Of Vata Origin.",
+        },
+      ],
+      properties: {
+        rasa: "Katu (Pungent)",
+        veerya: "Ushna (Hot)",
+        guna: " Laghu (Light), Ruksha (Dry), Tiksna (Sharp)",
+        vipaka: "Katu (Pungent)",
+      },
+      formulation: [
+        {
+          id: 0,
+          value: " Chitrak Haritaki",
+        },
+        {
+          id: 1,
+          value: " Chitrakadi Vati",
+        },
+        {
+          id: 2,
+          value: " Kalyanagulam",
+        },
+        {
+          id: 3,
+          value: " Chitrakodi Chuma",
+        },
+      ],
+      therapyUses: [
+        {
+          id: 0,
+          value: " Agnimandya",
+        },
+        {
+          id: 1,
+          value: " Grahani Rog",
+        },
+        {
+          id: 2,
+          value: " Udara Shula",
+        },
+        {
+          id: 3,
+          value: " Gudasotha",
+        },
+      ],
+      plant: {
+        detail: [
+          {
+            id: 0,
+            part: "Root",
+            description:
+              "Digestion, Skin conditions, manage blood sugar level.",
+          },
+          {
+            id: 1,
+            part: "Root Bark",
+            description: "Manage obesity, metabolism and assit in weight loss.",
+          },
+          {
+            id: 2,
+            part: "Leaf",
+            description: "Used externally for skin conditions and wounds.",
+          },
+        ],
+        combinedWith: "Pipplai, Haritakai, Guggulu, Punarnava, Amla, Giloy",
+        location:
+          "It is native to tropical and subtropical regions worldwide, including India and Srilanka.",
+      },
     },
   ]);
   const [sorting, setSorting] = useState(false);
   const [search, setSearch] = useState("");
   const [change, setChange] = useState(0);
+  const [manipulate, setManipulate] = useState(0);
   const [page, setPage] = useState(1);
   const [initial, setInitial] = useState(0);
   const [final, setFinal] = useState(4);
-
+  const errorRef = useRef(null);
   const installment = 5;
   //move forward
   const forward = () => {
@@ -56,184 +162,6 @@ export function Incredientlist() {
       setPage(page - 1);
     }
   };
-  // collect this array from db
-  const ing_list = [
-    {
-      id: 1,
-      name: "Khus Khus",
-      description:
-        "Khus khus, commonly known as poppy seeds, is a versatile ingredient and traditional herb celebrated for its wide-ranging benefits. Historically used as a natural remedy, these tiny seeds are well-regarded for their sedative properties, which can be particularly helpful in aiding insomnia and promoting a state of calm. They contain compounds that have a soothing effect on the nervous system, making them a popular choice for nighttime remedies. Beyond their calming effects, poppy seeds are also traditionally linked to enhancing fertility, with some cultures believing they can improve reproductive health. Nutritionally, khus khus is a powerhouse, packed with essential minerals like calcium, magnesium, and zinc, and they are a good source of healthy fats and dietary fiber. In the culinary world, they are a staple, used to add a nutty flavor and a thickening texture to various dishes, from savory curries and gravies to baked goods like cakes and bread.",
-      status: "Active",
-    },
-    {
-      id: 2,
-      name: "Rakta Chandan",
-      description:
-        "Rakta Chandan, also known as Red Sandalwood, is a species of tree native to southern India. It is highly valued for its rich, deep red-colored heartwood. Unlike the more common white sandalwood, Rakta Chandan is not aromatic but is prized for its medicinal and cosmetic properties. In traditional Ayurvedic medicine, it is used as a potent ingredient to treat a variety of skin conditions like acne, blemishes, and pigmentation due to its anti-inflammatory, antioxidant, and antibacterial properties. The wood is also used as an astringent, a natural dye, and is believed to have benefits for managing blood sugar levels and improving circulation. The wood from this tree is also used in traditional woodworking and for making high-quality furniture.",
-      status: "Active",
-    },
-    {
-      id: 3,
-      name: "Swarn Bhashm",
-      description:
-        "Swarn Bhasm, also known as Suvarna Bhasma or Gold Ash, is a traditional Ayurvedic preparation made from purified gold. The term 'Swarna' means gold, and 'Bhasma' refers to a calcined ash or powder. This medicine is highly regarded in Ayurveda for its potent therapeutic properties, with some sources claiming it can contain up to 98% pure gold in a nanoparticle form that is believed to be easily absorbed by the body.",
-      status: "Active",
-    },
-    {
-      id: 4,
-      name: "Giloy",
-      description:
-        "Giloy (Tinospora cordifolia), also known as Guduchi or Amrita, is a climbing shrub native to India that is highly valued in Ayurvedic medicine. It is often referred to as the 'root of immortality' due to its powerful therapeutic properties. While all parts of the plant are used, the stem is considered to have the most potent medicinal compounds.",
-      status: "Active",
-    },
-    {
-      id: 5,
-      name: "Bhringraj",
-      description:
-        "Bhringraj (Eclipta prostrata or Eclipta alba), also known as False Daisy or 'King of Hair', is a medicinal herb highly revered in Ayurveda for its profound impact on hair and overall well-being. It is a weed that grows in moist areas and is native to India and other parts of Asia. While all parts of the plant are used, the leaves are particularly valued for their therapeutic properties.",
-      status: "Inactive",
-    },
-    {
-      id: 6,
-      name: "Khus Khus",
-      description:
-        "Khus khus, commonly known as poppy seeds, is a versatile ingredient and traditional herb celebrated for its wide-ranging benefits. Historically used as a natural remedy, these tiny seeds are well-regarded for their sedative properties, which can be particularly helpful in aiding insomnia and promoting a state of calm. They contain compounds that have a soothing effect on the nervous system, making them a popular choice for nighttime remedies. Beyond their calming effects, poppy seeds are also traditionally linked to enhancing fertility, with some cultures believing they can improve reproductive health. Nutritionally, khus khus is a powerhouse, packed with essential minerals like calcium, magnesium, and zinc, and they are a good source of healthy fats and dietary fiber. In the culinary world, they are a staple, used to add a nutty flavor and a thickening texture to various dishes, from savory curries and gravies to baked goods like cakes and bread.",
-      status: "Active",
-    },
-    {
-      id: 7,
-      name: "Rakta Chandan",
-      description:
-        "Rakta Chandan, also known as Red Sandalwood, is a species of tree native to southern India. It is highly valued for its rich, deep red-colored heartwood. Unlike the more common white sandalwood, Rakta Chandan is not aromatic but is prized for its medicinal and cosmetic properties. In traditional Ayurvedic medicine, it is used as a potent ingredient to treat a variety of skin conditions like acne, blemishes, and pigmentation due to its anti-inflammatory, antioxidant, and antibacterial properties. The wood is also used as an astringent, a natural dye, and is believed to have benefits for managing blood sugar levels and improving circulation. The wood from this tree is also used in traditional woodworking and for making high-quality furniture.",
-      status: "Active",
-    },
-    {
-      id: 8,
-      name: "Swarn Bhashm",
-      description:
-        "Swarn Bhasm, also known as Suvarna Bhasma or Gold Ash, is a traditional Ayurvedic preparation made from purified gold. The term 'Swarna' means gold, and 'Bhasma' refers to a calcined ash or powder. This medicine is highly regarded in Ayurveda for its potent therapeutic properties, with some sources claiming it can contain up to 98% pure gold in a nanoparticle form that is believed to be easily absorbed by the body.",
-      status: "Active",
-    },
-    {
-      id: 9,
-      name: "Giloy",
-      description:
-        "Giloy (Tinospora cordifolia), also known as Guduchi or Amrita, is a climbing shrub native to India that is highly valued in Ayurvedic medicine. It is often referred to as the 'root of immortality' due to its powerful therapeutic properties. While all parts of the plant are used, the stem is considered to have the most potent medicinal compounds.",
-      status: "Active",
-    },
-    {
-      id: 10,
-      name: "Bhringraj",
-      description:
-        "Bhringraj (Eclipta prostrata or Eclipta alba), also known as False Daisy or 'King of Hair', is a medicinal herb highly revered in Ayurveda for its profound impact on hair and overall well-being. It is a weed that grows in moist areas and is native to India and other parts of Asia. While all parts of the plant are used, the leaves are particularly valued for their therapeutic properties.",
-      status: "Inactive",
-    },
-    {
-      id: 11,
-      name: "Khus Khus",
-      description:
-        "Khus khus, commonly known as poppy seeds, is a versatile ingredient and traditional herb celebrated for its wide-ranging benefits. Historically used as a natural remedy, these tiny seeds are well-regarded for their sedative properties, which can be particularly helpful in aiding insomnia and promoting a state of calm. They contain compounds that have a soothing effect on the nervous system, making them a popular choice for nighttime remedies. Beyond their calming effects, poppy seeds are also traditionally linked to enhancing fertility, with some cultures believing they can improve reproductive health. Nutritionally, khus khus is a powerhouse, packed with essential minerals like calcium, magnesium, and zinc, and they are a good source of healthy fats and dietary fiber. In the culinary world, they are a staple, used to add a nutty flavor and a thickening texture to various dishes, from savory curries and gravies to baked goods like cakes and bread.",
-      status: "Active",
-    },
-    {
-      id: 12,
-      name: "Rakta Chandan",
-      description:
-        "Rakta Chandan, also known as Red Sandalwood, is a species of tree native to southern India. It is highly valued for its rich, deep red-colored heartwood. Unlike the more common white sandalwood, Rakta Chandan is not aromatic but is prized for its medicinal and cosmetic properties. In traditional Ayurvedic medicine, it is used as a potent ingredient to treat a variety of skin conditions like acne, blemishes, and pigmentation due to its anti-inflammatory, antioxidant, and antibacterial properties. The wood is also used as an astringent, a natural dye, and is believed to have benefits for managing blood sugar levels and improving circulation. The wood from this tree is also used in traditional woodworking and for making high-quality furniture.",
-      status: "Active",
-    },
-    {
-      id: 13,
-      name: "Swarn Bhashm",
-      description:
-        "Swarn Bhasm, also known as Suvarna Bhasma or Gold Ash, is a traditional Ayurvedic preparation made from purified gold. The term 'Swarna' means gold, and 'Bhasma' refers to a calcined ash or powder. This medicine is highly regarded in Ayurveda for its potent therapeutic properties, with some sources claiming it can contain up to 98% pure gold in a nanoparticle form that is believed to be easily absorbed by the body.",
-      status: "Active",
-    },
-    {
-      id: 14,
-      name: "Giloy",
-      description:
-        "Giloy (Tinospora cordifolia), also known as Guduchi or Amrita, is a climbing shrub native to India that is highly valued in Ayurvedic medicine. It is often referred to as the 'root of immortality' due to its powerful therapeutic properties. While all parts of the plant are used, the stem is considered to have the most potent medicinal compounds.",
-      status: "Active",
-    },
-    {
-      id: 15,
-      name: "Bhringraj",
-      description:
-        "Bhringraj (Eclipta prostrata or Eclipta alba), also known as False Daisy or 'King of Hair', is a medicinal herb highly revered in Ayurveda for its profound impact on hair and overall well-being. It is a weed that grows in moist areas and is native to India and other parts of Asia. While all parts of the plant are used, the leaves are particularly valued for their therapeutic properties.",
-      status: "Inactive",
-    },
-    {
-      id: 16,
-      name: "Khus Khus",
-      description:
-        "Khus khus, commonly known as poppy seeds, is a versatile ingredient and traditional herb celebrated for its wide-ranging benefits. Historically used as a natural remedy, these tiny seeds are well-regarded for their sedative properties, which can be particularly helpful in aiding insomnia and promoting a state of calm. They contain compounds that have a soothing effect on the nervous system, making them a popular choice for nighttime remedies. Beyond their calming effects, poppy seeds are also traditionally linked to enhancing fertility, with some cultures believing they can improve reproductive health. Nutritionally, khus khus is a powerhouse, packed with essential minerals like calcium, magnesium, and zinc, and they are a good source of healthy fats and dietary fiber. In the culinary world, they are a staple, used to add a nutty flavor and a thickening texture to various dishes, from savory curries and gravies to baked goods like cakes and bread.",
-      status: "Active",
-    },
-    {
-      id: 17,
-      name: "Rakta Chandan",
-      description:
-        "Rakta Chandan, also known as Red Sandalwood, is a species of tree native to southern India. It is highly valued for its rich, deep red-colored heartwood. Unlike the more common white sandalwood, Rakta Chandan is not aromatic but is prized for its medicinal and cosmetic properties. In traditional Ayurvedic medicine, it is used as a potent ingredient to treat a variety of skin conditions like acne, blemishes, and pigmentation due to its anti-inflammatory, antioxidant, and antibacterial properties. The wood is also used as an astringent, a natural dye, and is believed to have benefits for managing blood sugar levels and improving circulation. The wood from this tree is also used in traditional woodworking and for making high-quality furniture.",
-      status: "Active",
-    },
-    {
-      id: 18,
-      name: "Swarn Bhashm",
-      description:
-        "Swarn Bhasm, also known as Suvarna Bhasma or Gold Ash, is a traditional Ayurvedic preparation made from purified gold. The term 'Swarna' means gold, and 'Bhasma' refers to a calcined ash or powder. This medicine is highly regarded in Ayurveda for its potent therapeutic properties, with some sources claiming it can contain up to 98% pure gold in a nanoparticle form that is believed to be easily absorbed by the body.",
-      status: "Active",
-    },
-    {
-      id: 19,
-      name: "Giloy",
-      description:
-        "Giloy (Tinospora cordifolia), also known as Guduchi or Amrita, is a climbing shrub native to India that is highly valued in Ayurvedic medicine. It is often referred to as the 'root of immortality' due to its powerful therapeutic properties. While all parts of the plant are used, the stem is considered to have the most potent medicinal compounds.",
-      status: "Active",
-    },
-    {
-      id: 20,
-      name: "Bhringraj",
-      description:
-        "Bhringraj (Eclipta prostrata or Eclipta alba), also known as False Daisy or 'King of Hair', is a medicinal herb highly revered in Ayurveda for its profound impact on hair and overall well-being. It is a weed that grows in moist areas and is native to India and other parts of Asia. While all parts of the plant are used, the leaves are particularly valued for their therapeutic properties.",
-      status: "Inactive",
-    },
-    {
-      id: 21,
-      name: "Khus Khus",
-      description:
-        "Khus khus, commonly known as poppy seeds, is a versatile ingredient and traditional herb celebrated for its wide-ranging benefits. Historically used as a natural remedy, these tiny seeds are well-regarded for their sedative properties, which can be particularly helpful in aiding insomnia and promoting a state of calm. They contain compounds that have a soothing effect on the nervous system, making them a popular choice for nighttime remedies. Beyond their calming effects, poppy seeds are also traditionally linked to enhancing fertility, with some cultures believing they can improve reproductive health. Nutritionally, khus khus is a powerhouse, packed with essential minerals like calcium, magnesium, and zinc, and they are a good source of healthy fats and dietary fiber. In the culinary world, they are a staple, used to add a nutty flavor and a thickening texture to various dishes, from savory curries and gravies to baked goods like cakes and bread.",
-      status: "Active",
-    },
-    {
-      id: 22,
-      name: "Rakta Chandan",
-      description:
-        "Rakta Chandan, also known as Red Sandalwood, is a species of tree native to southern India. It is highly valued for its rich, deep red-colored heartwood. Unlike the more common white sandalwood, Rakta Chandan is not aromatic but is prized for its medicinal and cosmetic properties. In traditional Ayurvedic medicine, it is used as a potent ingredient to treat a variety of skin conditions like acne, blemishes, and pigmentation due to its anti-inflammatory, antioxidant, and antibacterial properties. The wood is also used as an astringent, a natural dye, and is believed to have benefits for managing blood sugar levels and improving circulation. The wood from this tree is also used in traditional woodworking and for making high-quality furniture.",
-      status: "Active",
-    },
-    {
-      id: 23,
-      name: "Swarn Bhashm",
-      description:
-        "Swarn Bhasm, also known as Suvarna Bhasma or Gold Ash, is a traditional Ayurvedic preparation made from purified gold. The term 'Swarna' means gold, and 'Bhasma' refers to a calcined ash or powder. This medicine is highly regarded in Ayurveda for its potent therapeutic properties, with some sources claiming it can contain up to 98% pure gold in a nanoparticle form that is believed to be easily absorbed by the body.",
-      status: "Active",
-    },
-    {
-      id: 24,
-      name: "Giloy",
-      description:
-        "Giloy (Tinospora cordifolia), also known as Guduchi or Amrita, is a climbing shrub native to India that is highly valued in Ayurvedic medicine. It is often referred to as the 'root of immortality' due to its powerful therapeutic properties. While all parts of the plant are used, the stem is considered to have the most potent medicinal compounds.",
-      status: "Active",
-    },
-    {
-      id: 25,
-      name: "Bhringraj",
-      description:
-        "Bhringraj (Eclipta prostrata or Eclipta alba), also known as False Daisy or 'King of Hair', is a medicinal herb highly revered in Ayurveda for its profound impact on hair and overall well-being. It is a weed that grows in moist areas and is native to India and other parts of Asia. While all parts of the plant are used, the leaves are particularly valued for their therapeutic properties.",
-      status: "Inactive",
-    },
-  ];
 
   //asc sort functionality w.r.t name
   const Asort_ing = () => {
@@ -349,16 +277,74 @@ export function Incredientlist() {
       console.error("Error generating or downloading the Excel file:", error);
     }
   };
-
+  const onDelete = async (id) => {
+    errorRef.current.style.display = "block";
+    errorRef.current.style.color = "red";
+    errorRef.current.textContent = "deleting ...";
+    const url = `${process.env.REACT_APP_BACKEND_HOST}/ingredients`;
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ id }),
+    });
+    const received = await response.json();
+    if (response.ok) {
+      setManipulate((pre) => pre + 1);
+      errorRef.current.style.color = "green";
+      errorRef.current.textContent = received.message;
+      setTimeout(() => {
+        errorRef.current.style.display = "none";
+      }, 3000);
+    } else {
+      errorRef.current.style.color = "red";
+      errorRef.current.textContent = received.message;
+    }
+  };
+  const onEdit = async (id) => {
+    errorRef.current.style.display = "block";
+    errorRef.current.style.color = "blue";
+    errorRef.current.textContent = "editIng ...";
+    const editIng = JSON.parse(ing.filter((item) => item.id === id)[0].details);
+    sessionStorage.setItem("newIng", JSON.stringify(editIng));
+    sessionStorage.setItem("modify", JSON.stringify({ id: id, status: "yes" }));
+    setTimeout(() => {
+      errorRef.current.style.display = "none";
+      window.location.replace("/add_ingredients");
+    }, 2000);
+  };
   useEffect(() => {
-    setIng(ing_list);
-  }, []);
+    const url = `${process.env.REACT_APP_BACKEND_HOST}/ingredients`;
+    const fetchIng = async () => {
+      const response = await fetch(url, {
+        method: "GET",
+        headers: { "content-type": "application/json" },
+      });
+      const received = await response.json();
+      if (response.ok) {
+        setIng(received.data);
+        if (received.data.length > 0) {
+          errorRef.current.style.color = "green";
+          errorRef.current.textContent = received.message;
+          setTimeout(() => {
+            errorRef.current.style.display = "none";
+          }, 3000);
+        } else {
+          errorRef.current.style.color = "red";
+          errorRef.current.textContent = "no Ingredient found !";
+        }
+      } else {
+        errorRef.current.style.color = "red";
+        errorRef.current.textContent = received.message;
+      }
+    };
+    fetchIng();
+  }, [manipulate]);
 
   return (
-    <section className="flex flex-col w-full self-center md:w-[75%] p-5 box-border border-2 rounded-2xl gap-6 shadow-lg bg-lime-50 my-10">
+    <section className="flex flex-col w-full self-center md:w-[75%] p-5 box-border border-2 rounded-2xl gap-6 shadow-lg bg-gray-200 my-10">
       <article className="flex box-border flex-wrap gap-4">
         <article className="left flex grow gap-2 items-center">
-          <strong>ingredients List</strong>
+          <h1>ingredients List</h1>
           <div className="relative flex items-center">
             <input
               className="p-2 rounded-xl border-2 text-center w-[50vmin]"
@@ -402,30 +388,45 @@ export function Incredientlist() {
             Description
           </strong>
           <strong className="text-xl font-mono text-right">Status</strong>
+          <strong className="text-xl font-mono text-right">Manipulate</strong>
         </article>
         {ing
-          .filter((item) =>
-            search.length > 0
+          .filter((inthere) => {
+            const item = JSON.parse(inthere.details || "{}");
+            return search.length > 0
               ? item.name.toLowerCase().includes(search.toLowerCase()) ||
-                item.description.toLowerCase().includes(search.toLowerCase())
-              : item.id
-          )
+                  item.description.toLowerCase().includes(search.toLowerCase())
+              : inthere.id;
+          })
           .slice(initial, final + 1)
-          .map((item, index) => (
-            <article key={`ing/${index}`} className="ingtable gap-4">
-              <p>{item.id}{item.name}</p>
-              <p className="font-semibold text-center">
-                {item.description.slice(0, 50)}...
-              </p>
-              <p
-                className={`${
-                  item.status === "Active" ? "text-green-400" : "text-red-400"
-                } font-bold text-right`}
-              >
-                {item.status}
-              </p>
-            </article>
-          ))}
+          .map((inthere, index) => {
+            const item = JSON.parse(inthere.details || "{}");
+            return (
+              <article key={`ing/${index}`} className="ingtable gap-4">
+                <p>{item.name}</p>
+                <p className="font-semibold text-center">
+                  {item.description.slice(0, 50)}...
+                </p>
+                <p
+                  className={`${
+                    item.status === "Active" ? "text-green-400" : "text-red-400"
+                  } font-bold text-right`}
+                >
+                  {item.status}
+                </p>
+                <section className="flex gap-2 items-center justify-end pr-3">
+                  <FaEdit
+                    className="icon text-2xl text-blue-500"
+                    onClick={() => onEdit(inthere.id)}
+                  />
+                  <MdDelete
+                    className="icon text-2xl text-red-500"
+                    onClick={() => onDelete(inthere.id)}
+                  />
+                </section>
+              </article>
+            );
+          })}
       </article>
       <article className="flex justify-center">
         <div className="flex gap-2 items-center">
@@ -434,6 +435,7 @@ export function Incredientlist() {
           <FaArrowRight className="icon text-2xl" onClick={() => forward()} />
         </div>
       </article>
+      <strong className="text-center" ref={errorRef}></strong>
     </section>
   );
 }

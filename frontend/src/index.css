@@ -50,8 +50,8 @@ div {
 }
 .ingtable {
   display: grid;
-  grid-template-columns: minmax(20%, 40%) 50% minmax(20%, 40%);
-  border-bottom: 5px solid black;
+  grid-template-columns: minmax(10%, 20%) minmax(30%, 60%) minmax(10%, 20%) minmax(20%, 30%);
+  border-bottom: 2px solid black;
 }
 .plantTable {
   display: grid;

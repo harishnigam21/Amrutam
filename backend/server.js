@@ -15,14 +15,12 @@ app.use(cookieParser());
 app.use(cors(corsOptions));
 
 //app
-
+app.use("/", require("./route/ingredient"));
 
 app.get("/", (req, res) => {
   res.send("Welcome to Amrutam Backend Server");
 });
 
 app.listen(PORT, () => {
-  console.log(
-    `Your Amrutam backend is running on PORT no : ${PORT}`
-  );
+  console.log(`Your Amrutam backend is running on PORT no : ${PORT}`);
 });

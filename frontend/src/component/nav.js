@@ -1,6 +1,5 @@
 import logo from "../assets/images/logo.png";
 import { Link } from "react-router-dom";
-import dummyprofile from "../assets/images/dummyprofile.png";
 export function Nav({ user }) {
   return (
     <nav className="flex bg-slate-200 flex-row w-screen justify-between z-20 sticky top-0 p-2 shadow-[0_5px_10px_-5px_black]">
@@ -23,8 +22,8 @@ export function Nav({ user }) {
           <small>{user.role}</small>
         </article>
         {/* fetch image from db */}
-        {!dummyprofile ? (
-          <img src={dummyprofile} alt="profile" className="w-8 aspect-square" />
+        {user.img ? (
+          <img src={user.img} alt="profile" className="w-8 aspect-square" />
         ) : (
           <strong className="border-2 text-[#589363] border-[#589363] p-2 aspect-square rounded-full">
             {user.first_name[0] + user.last_name[0]}

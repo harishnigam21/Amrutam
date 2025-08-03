@@ -4,6 +4,8 @@ import { Nav } from "./component/nav";
 import { useEffect, useState } from "react";
 import { Outlet, useLocation, matchPath } from "react-router-dom";
 import { navList } from "./assets/component_assets/nav_list";
+import dummyprofile from "./assets/images/dummyprofile.png";
+
 export function Home() {
   const location = useLocation();
   const [childPaths, setChildPaths] = useState([]);
@@ -12,6 +14,7 @@ export function Home() {
     last_name: "Nigam",
     dob: "18/02/2002",
     role: "admin",
+    img: dummyprofile,
   }); //fetch data from db
   useEffect(() => {
     setChildPaths([]);
