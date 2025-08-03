@@ -281,7 +281,7 @@ export function Home() {
                 <div class="bg-gray-50 p-6 rounded-2xl shadow-lg border border-gray-200">
                   <div class="flex items-center mb-4">
                     <img
-                      src="https://placehold.co/64x64/a5b4fc/4338ca?text=JD"
+                      src="https://placehold.co/64x64/a5b4fc/4338ca?text=RS"
                       alt="John Doe"
                       class="w-16 h-16 rounded-full mr-4"
                     />
@@ -299,7 +299,7 @@ export function Home() {
                 <div class="bg-gray-50 p-6 rounded-2xl shadow-lg border border-gray-200">
                   <div class="flex items-center mb-4">
                     <img
-                      src="https://placehold.co/64x64/a5b4fc/4338ca?text=SJ"
+                      src="https://placehold.co/64x64/a5b4fc/4338ca?text=DP"
                       alt="Jane Smith"
                       class="w-16 h-16 rounded-full mr-4"
                     />
@@ -317,7 +317,7 @@ export function Home() {
                 <div class="bg-gray-50 p-6 rounded-2xl shadow-lg border border-gray-200">
                   <div class="flex items-center mb-4">
                     <img
-                      src="https://placehold.co/64x64/a5b4fc/4338ca?text=PT"
+                      src="https://placehold.co/64x64/a5b4fc/4338ca?text=YS"
                       alt="Peter T."
                       class="w-16 h-16 rounded-full mr-4"
                     />
