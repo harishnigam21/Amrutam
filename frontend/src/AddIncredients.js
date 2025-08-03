@@ -5,6 +5,7 @@ import { RxCross2 } from "react-icons/rx";
 import { IoMdAdd } from "react-icons/io";
 import { FaShare } from "react-icons/fa";
 import dummyprofile from "./assets/images/dummyprofile.png";
+import UploadThings from "./uplodFile";
 
 export function AddIncredient() {
   const hasInit = useRef(false);
@@ -45,6 +46,8 @@ export function AddIncredient() {
   const errorRef4 = useRef(null);
   const errorRef5 = useRef(null);
   const errorRef6 = useRef(null);
+  const uploadRef = useRef();
+
   const slider = ["general", "benefits", "properties", "other", "overview"];
   useEffect(() => {
     const check = sessionStorage.getItem("newIng");
@@ -78,6 +81,13 @@ export function AddIncredient() {
     setSave(true);
     setAdd(false);
   }, [ing]);
+  useEffect(() => {
+    if (ing.imageurl) {
+      setSave(false);
+      setClear(false);
+      setAdd(true);
+    }
+  }, [ing.imageurl]);
   const onNext = (e) => {
     setAdd(false);
     setSave(true);
@@ -105,13 +115,16 @@ export function AddIncredient() {
       ele.querySelectorAll("strong")[0].style.fontWeight = "bolder";
     }
   };
-  const onSave = (e) => {
+  const onSave = async (e) => {
     e.preventDefault();
+    const uploadUrls = await uploadRef.current?.handleSubmit();
     if (
+      uploadUrls.length > 0 &&
       ing.name.length > 2 &&
       ing.description.length > 2 &&
       ing.status.length > 0
     ) {
+      setIng((prop) => ({ ...prop, imageurl: uploadUrls }));
       errorRef1.current.style.display = "none";
       errorRef1.current.textContent = "";
       setSave(false);
@@ -125,7 +138,9 @@ export function AddIncredient() {
           ing.name.length > 2
             ? ing.description.length > 2
               ? ing.status.length > 0
-                ? ""
+                ? uploadUrls.length > 0
+                  ? ""
+                  : "Image"
                 : "Status"
               : "Speciality Description"
             : "Speciality Name"
@@ -1298,7 +1313,7 @@ export function AddIncredient() {
             <FaShare />
           </div>
           <img
-            src={dummyprofile}
+            src={ing.imageurl[0]}
             className="w-[200px] h-[200px] self-center"
             alt="about ing"
           />
@@ -1510,22 +1525,29 @@ export function AddIncredient() {
             </div>
           </article>
         </article>
-        <article className="flex w-[50%] items-center gap-2 p-4">
-          <label className="flex flex-nowrap min-w-full border-2 rounded-md p-2 items-center">
+        <article className="flex gap-4 p-4 items-start">
+          <label className="flex flex-nowrap grow border-2 rounded-md p-2 items-center">
             <GrAttachment />
             Attachment
           </label>
-          <input
-            type="file"
-            id="image"
-            name="image"
-            accept="image/png, image/jpeg"
-            onChange={(e) =>
-              setIng((prop) => ({ ...prop, imageurl: e.target.value }))
-            }
-            required
-          />
+          <UploadThings ref={uploadRef} />
         </article>
+        {ing.imageurl.length > 0 ? (
+          <article className="flex flex-col p-4">
+            <strong>Current Attachment :</strong>
+            <img
+              src={ing.imageurl[0]}
+              alt="preview"
+              className="w-[200px] aspect-square"
+            />
+            <p className="text-red-500">
+              <strong>NOTE :- </strong>To change Image, please upload new image,
+              it will replace previous one
+            </p>
+          </article>
+        ) : (
+          <></>
+        )}
         <article className="flex justify-end gap-4 px-4">
           <button
             id="clear"
@@ -1537,9 +1559,13 @@ export function AddIncredient() {
               setIng((prop) => ({ ...prop, description: "" }));
               setIng((prop) => ({ ...prop, status: "" }));
               setIng((prop) => ({ ...prop, imageurl: "" }));
-              document.querySelector(
-                'input[name="status"]:checked'
-              ).checked = false;
+              if (
+                document.querySelector('input[name="status"]').checked === true
+              ) {
+                document.querySelector(
+                  'input[name="status"]:checked'
+                ).checked = false;
+              }
             }}
           >
             Clear

@@ -50,7 +50,10 @@ div {
 }
 .ingtable {
   display: grid;
-  grid-template-columns: minmax(10%, 20%) minmax(30%, 60%) minmax(10%, 20%) minmax(20%, 30%);
+  grid-template-columns: minmax(10%, 20%) minmax(30%, 60%) minmax(10%, 20%) minmax(
+      20%,
+      30%
+    );
   border-bottom: 2px solid black;
 }
 .plantTable {
@@ -65,6 +68,7 @@ div {
   background-image: linear-gradient(to left, white 50%, transparent 50%);
   background-repeat: no-repeat;
 }
+
 @keyframes fromLeft {
   0% {
     opacity: 0;

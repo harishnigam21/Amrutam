@@ -16,6 +16,7 @@ app.use(cors(corsOptions));
 
 //app
 app.use("/", require("./route/ingredient"));
+app.use("/", require("./route/uploadthing"));
 
 app.get("/", (req, res) => {
   res.send("Welcome to Amrutam Backend Server");
