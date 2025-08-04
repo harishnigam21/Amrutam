@@ -35,7 +35,7 @@ export function Home() {
       <Nav user={user} />
       <Sidebar />
       {hasChildRouteMatch ? (
-        <section className="flex justify-center animate-[fromDown_1s_ease] p-2">
+        <section className="flex justify-center animate-[fromDown_1s_ease] p-2 box-border">
           <Outlet />
         </section>
       ) : (

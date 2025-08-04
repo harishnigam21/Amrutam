@@ -28,16 +28,15 @@ const UploadThings = forwardRef((props, ref) => {
   };
   //TODO return error for max size and max number of file
   return (
-    <div className="w-full max-w-md space-y-4">
+    <div className="w-full overflow-hidden space-y-4">
       <label className="block">
         <span className="sr-only">Choose File</span>
         <input
           id="image"
           name="image"
           type="file"
-          multiple
           onChange={handleFileChange}
-          className="block w-full text-sm text-gray-500
+          className=" w-full text-sm text-gray-500
                      file:mr-4 file:py-2 file:px-4
                      file:rounded-md file:border-0
                      file:text-sm file:font-semibold
@@ -45,6 +44,8 @@ const UploadThings = forwardRef((props, ref) => {
                      hover:file:bg-indigo-100"
         />
       </label>
+
+      <strong className="text-red-600 text-[12px]">Max File : 1,Max Size : 4MB</strong>
 
       {selectedFiles.length > 0 && (
         <div className="space-y-1">

@@ -4,7 +4,6 @@ import { GrAttachment } from "react-icons/gr";
 import { RxCross2 } from "react-icons/rx";
 import { IoMdAdd } from "react-icons/io";
 import { FaShare } from "react-icons/fa";
-import dummyprofile from "./assets/images/dummyprofile.png";
 import UploadThings from "./uplodFile";
 
 export function AddIncredient() {
@@ -117,20 +116,26 @@ export function AddIncredient() {
   };
   const onSave = async (e) => {
     e.preventDefault();
-    const uploadUrls = await uploadRef.current?.handleSubmit();
     if (
-      uploadUrls.length > 0 &&
       ing.name.length > 2 &&
       ing.description.length > 2 &&
       ing.status.length > 0
     ) {
-      setIng((prop) => ({ ...prop, imageurl: uploadUrls }));
-      errorRef1.current.style.display = "none";
-      errorRef1.current.textContent = "";
-      setSave(false);
-      setClear(false);
-      setAdd(true);
-      sessionStorage.setItem("newIng", JSON.stringify(ing));
+      const uploadUrls = await uploadRef.current?.handleSubmit();
+      if (uploadUrls.length > 0) {
+        setIng((prop) => ({ ...prop, imageurl: uploadUrls }));
+        errorRef1.current.style.display = "none";
+        errorRef1.current.textContent = "";
+        setSave(false);
+        setClear(false);
+        setAdd(true);
+        sessionStorage.setItem("newIng", JSON.stringify(ing));
+      } else {
+        if (errorRef1.current) {
+          errorRef1.current.style.display = "flex";
+          errorRef1.current.textContent = "Missing Image";
+        }
+      }
     } else {
       if (errorRef1.current) {
         errorRef1.current.style.display = "flex";
@@ -138,9 +143,7 @@ export function AddIncredient() {
           ing.name.length > 2
             ? ing.description.length > 2
               ? ing.status.length > 0
-                ? uploadUrls.length > 0
-                  ? ""
-                  : "Image"
+                ? ""
                 : "Status"
               : "Speciality Description"
             : "Speciality Name"
@@ -1445,7 +1448,7 @@ export function AddIncredient() {
       </section>
     </section>
   ) : (
-    <section className="p-4">
+    <section className="md:p-4 box-border">
       <form className="flex p-4 flex-col w-screen md:w-[75vw] gap-3 box-border">
         <strong>Add Incredient</strong>
         <article className="flex flex-col md:flex-row w-full gap-2">

@@ -348,7 +348,7 @@ export function Incredientlist() {
     <section className="flex flex-col w-full self-center md:w-[75%] p-5 box-border border-2 rounded-2xl gap-6 shadow-lg bg-gray-200 my-10">
       <article className="flex box-border flex-wrap gap-4">
         <article className="left flex grow gap-2 items-center">
-          <h1>ingredients List</h1>
+          <h1>Ingredients List</h1>
           <div className="relative flex items-center">
             <input
               className="p-2 rounded-xl border-2 text-center w-[50vmin]"

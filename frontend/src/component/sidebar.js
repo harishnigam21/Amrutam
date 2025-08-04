@@ -20,7 +20,10 @@ export function Sidebar() {
   return (
     <>
       {shownav ? (
-        <nav className="flex flex-col bg-slate-200 h-screen fixed left-0 overflow-scroll noscrollbar transition-all z-30 shadow-[5px_0_10px_-5px_black] animate-[fromLeft_1s_ease]">
+        <nav
+          className="flex flex-col bg-slate-200 h-screen fixed left-0 overflow-scroll noscrollbar transition-all z-30 shadow-[5px_0_10px_-5px_black] animate-[fromLeft_1s_ease]"
+          onMouseLeave={() => setShownav(false)}
+        >
           <article className="flex m-2 justify-end">
             <ImCross
               className="icon text-red-600"
@@ -76,11 +79,11 @@ export function Sidebar() {
           ))}
         </nav>
       ) : (
-        <nav className="fixed left-0 py-5 rounded-b-lg bg-slate-300 z-10">
-          <TbArrowBarRight
-            className="icon text-3xl"
-            onClick={() => setShownav(true)}
-          />
+        <nav
+          className="icon fixed left-0 py-5 rounded-b-lg bg-slate-300 z-10"
+          onMouseEnter={() => setShownav(true)}
+        >
+          <TbArrowBarRight className="icon text-3xl" />
         </nav>
       )}
     </>
