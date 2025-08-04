@@ -128,6 +128,7 @@ export function Incredientlist() {
     },
   ]);
   const [sorting, setSorting] = useState(false);
+  const [show, setShow] = useState(false);
   const [search, setSearch] = useState("");
   const [change, setChange] = useState(0);
   const [manipulate, setManipulate] = useState(0);
@@ -322,15 +323,18 @@ export function Incredientlist() {
       const received = await response.json();
       if (response.ok) {
         setIng(received.data);
-        if (received.data.length > 0) {
+        setShow(true);
+        if (received.data.length > 0 && errorRef.current) {
           errorRef.current.style.color = "green";
           errorRef.current.textContent = received.message;
           setTimeout(() => {
             errorRef.current.style.display = "none";
           }, 3000);
         } else {
-          errorRef.current.style.color = "red";
-          errorRef.current.textContent = "no Ingredient found !";
+          if (errorRef.current) {
+            errorRef.current.style.color = "red";
+            errorRef.current.textContent = "no Ingredient found !";
+          }
         }
       } else {
         errorRef.current.style.color = "red";
@@ -340,7 +344,7 @@ export function Incredientlist() {
     fetchIng();
   }, [manipulate]);
 
-  return (
+  return show ? (
     <section className="flex flex-col w-full self-center md:w-[75%] p-5 box-border border-2 rounded-2xl gap-6 shadow-lg bg-gray-200 my-10">
       <article className="flex box-border flex-wrap gap-4">
         <article className="left flex grow gap-2 items-center">
@@ -436,6 +440,11 @@ export function Incredientlist() {
         </div>
       </article>
       <strong className="text-center" ref={errorRef}></strong>
+    </section>
+  ) : (
+    <section className="flex gap-2 justify-center items-center">
+      <h1>Loading</h1>
+      <div className="loarder"></div>
     </section>
   );
 }

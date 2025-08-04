@@ -26,7 +26,7 @@ const UploadThings = forwardRef((props, ref) => {
     setSelectedFiles(files);
     setUploadedUrls([]); // reset previously uploaded
   };
-
+  //TODO return error for max size and max number of file
   return (
     <div className="w-full max-w-md space-y-4">
       <label className="block">
