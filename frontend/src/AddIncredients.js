@@ -1448,9 +1448,9 @@ export function AddIncredient() {
     <section className="p-4">
       <form className="flex p-4 flex-col w-screen md:w-[75vw] gap-3 box-border">
         <strong>Add Incredient</strong>
-        <article className="flex w-full gap-2">
-          <article className="left flex flex-col gap-2 w-[50%] p-4">
-            <div className="relative flex flex-col items-start">
+        <article className="flex flex-col md:flex-row w-full gap-2">
+          <article className="left flex md:flex-col gap-6 md:gap-2 md:w-[50%] p-4">
+            <div className="relative grow md:grow-0 flex flex-col items-start">
               <label
                 htmlFor="name"
                 className="after:content-['*'] after:text-red-500 bg-white z-[2] ml-3"
@@ -1503,7 +1503,7 @@ export function AddIncredient() {
               </div>
             </div>
           </article>
-          <article className="right flex flex-col gap-2 w-[50%] p-4">
+          <article className="right flex flex-col gap-2 md:w-[50%] p-4">
             <div className="flex flex-col">
               <label
                 htmlFor="description"
@@ -1548,7 +1548,7 @@ export function AddIncredient() {
         ) : (
           <></>
         )}
-        <article className="flex justify-end gap-4 px-4">
+        <article className="flex flex-wrap justify-center md:flex-nowrap md:justify-end gap-4 px-4">
           <button
             id="clear"
             type="button"
