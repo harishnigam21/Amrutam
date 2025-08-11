@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { Outlet, useLocation, matchPath } from "react-router-dom";
 import { navList } from "./assets/component_assets/nav_list";
 import dummyprofile from "./assets/images/dummyprofile.png";
+import point from "./assets/images/point1.png";
 
 export function Home() {
   const location = useLocation();
@@ -334,6 +335,37 @@ export function Home() {
                 </div>
               </div>
             </div>
+          </section>
+
+          <section className="map relative w-full h-full aspect-video  bg-[url(./assets/images/map-new-desktop.jpg)] bg-cover bg-no-repeat ">
+            <article className="absolute w-full h-full">
+              <div className="pointer flex absolute top-[62%] left-[34%] items-center">
+                <img
+                  className="w-[2vw] rounded-full"
+                  src="https://3d.irth.ae/images/map/markers/dubai-marina.png"
+                  alt="refresh"
+                />
+                <small className="text-[2vw]">
+                  {"<---"}A
+                </small>
+              </div>
+              <div className="pointer flex absolute top-[30%] left-[53%] items-center">
+                <img
+                  className="w-[2vw] rounded-full"
+                  src="https://3d.irth.ae/images/map/markers/downtown.png"
+                  alt="refresh"
+                />
+                <small className="text-[2vw]">{"<---"}B</small>
+              </div>
+              <div className="pointer flex absolute top-[32.8%] left-[54.5%] items-center">
+                <img
+                  className="w-[2vw] rounded-full"
+                  src="https://3d.irth.ae/images/map/markers/marasi-drive.png"
+                  alt="refresh"
+                />
+                <small className="text-[2vw]">{"<---"}C</small>
+              </div>
+            </article>
           </section>
         </section>
       )}

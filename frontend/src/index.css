@@ -183,3 +183,24 @@ div {
     transform: rotateY(0deg);
   }
 }
+.pointer {
+  img,small {
+    transition: all 1s ease;
+  }
+}
+.pointer {
+  img {
+    transform: translateX(1rem) scale(2.5);
+  }
+  small {
+    transform: translateX(1rem);
+  }
+}
+.map:hover {
+  img {
+    transform: translateX(0) scale(1);
+  }
+  small {
+    transform: translateX(0);
+  }
+}
