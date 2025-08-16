@@ -596,7 +596,7 @@ export function AddIncredient() {
                 </label>
                 <select
                   id="vata"
-                  className="w-full grow p-2 border-2 rounded-md text-center mt-[-1.5ch]"
+                  className="w-full grow p-2 bg-white py-4 border-2 rounded-md text-center mt-[-1.5ch]"
                   value={ing.prakritiImpact.vata}
                   onChange={(e) =>
                     setIng((prop) => ({
@@ -627,7 +627,7 @@ export function AddIncredient() {
                 </label>
                 <select
                   id="kapha"
-                  className="w-full grow p-2 border-2 rounded-md text-center mt-[-1.5ch]"
+                  className="w-full grow p-2 border-2 rounded-md text-center mt-[-1.5ch] bg-white py-4"
                   value={ing.prakritiImpact.kapha}
                   onChange={(e) =>
                     setIng((prop) => ({
@@ -658,7 +658,7 @@ export function AddIncredient() {
                 </label>
                 <select
                   id="pitta"
-                  className="w-full grow p-2 border-2 rounded-md text-center mt-[-1.5ch]"
+                  className="w-full grow p-2 border-2 rounded-md text-center mt-[-1.5ch] bg-white py-4"
                   value={ing.prakritiImpact.pitta}
                   onChange={(e) =>
                     setIng((prop) => ({
@@ -689,7 +689,7 @@ export function AddIncredient() {
                 </label>
                 <select
                   id="vatareason"
-                  className="w-full grow p-2 border-2 rounded-md text-center mt-[-1.5ch]"
+                  className="w-full grow p-2 border-2 rounded-md text-center mt-[-1.5ch] bg-white py-4"
                   value={ing.prakritiImpact.vataReason}
                   onChange={(e) =>
                     setIng((prop) => ({
@@ -727,7 +727,7 @@ export function AddIncredient() {
                 </label>
                 <select
                   id="kaphareason"
-                  className="w-full grow p-2 border-2 rounded-md text-center mt-[-1.5ch]"
+                  className="w-full grow p-2 border-2 rounded-md text-center mt-[-1.5ch] bg-white py-4"
                   value={ing.prakritiImpact.kaphaReason}
                   onChange={(e) =>
                     setIng((prop) => ({
@@ -768,7 +768,7 @@ export function AddIncredient() {
                 </label>
                 <select
                   id="pittareason"
-                  className="w-full grow p-2 border-2 rounded-md text-center mt-[-1.5ch]"
+                  className="w-full grow p-2 border-2 rounded-md text-center mt-[-1.5ch] bg-white py-4"
                   value={ing.prakritiImpact.pittaReason}
                   onChange={(e) =>
                     setIng((prop) => ({
@@ -1123,7 +1123,7 @@ export function AddIncredient() {
                   Plant Part
                 </label>
                 <select
-                  className="border-2 rounded-md p-2 mt-[-1.5ch] text-center"
+                  className="border-2 rounded-md p-2 mt-[-1.5ch] text-center bg-white py-4"
                   value={item.part}
                   onChange={(e) =>
                     setIng((prop) => ({

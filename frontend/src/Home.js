@@ -337,7 +337,7 @@ export function Home() {
             </div>
           </section>
 
-          <section className="map relative w-full h-full aspect-video  bg-[url(./assets/images/map-new-desktop.jpg)] bg-cover bg-no-repeat ">
+          <section className="map overflow-hidden  relative w-full h-full aspect-video  bg-[url(./assets/images/map-new-desktop.jpg)] bg-cover bg-no-repeat ">
             <article className="absolute w-full h-full">
               <div className="pointer flex absolute top-[62%] left-[34%] items-center">
                 <img
