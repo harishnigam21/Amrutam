@@ -36,6 +36,7 @@ const UploadThings = forwardRef((props, ref) => {
           name="image"
           type="file"
           onChange={handleFileChange}
+          accept="image/*"
           className=" w-full text-sm text-gray-500
                      file:mr-4 file:py-2 file:px-4
                      file:rounded-md file:border-0

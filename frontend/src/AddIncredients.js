@@ -1474,7 +1474,7 @@ export function AddIncredient() {
               />
             </div>
             <div className="flex flex-col items-start">
-              <label htmlFor="status" className="after:content-['*']">
+              <label htmlFor="status" className="after:content-['*'] after:text-red-500">
                 Status
               </label>
               <div className="flex flex-wrap gap-2">
@@ -1510,7 +1510,7 @@ export function AddIncredient() {
             <div className="flex flex-col">
               <label
                 htmlFor="description"
-                className=" after:content-['*'] bg-white w-fit z-[1] ml-3"
+                className=" after:content-['*'] after:text-red-500 bg-white w-fit z-[1] ml-3"
               >
                 Speciality Description
               </label>
